@@ -27,19 +27,20 @@ export const useRaceStore = defineStore('race', () => {
   const currentRoundIndex = ref<number>(INITIAL_ROUND_VALUE)
   const isPaused = ref(true)
   const finishedHorsesCount = ref(0)
-  let roundStartTime = Date.now()
+  let roundStartTime = performance.now()
+  let roundStartTimestamp = Date.now()
+  let pausedTime = 0
+  let pauseStartTime = 0
 
-  const currentRoundDistance = computed(() => raceDistances.value[currentRoundIndex.value]!)
+  const currentRoundDistance = computed(() => raceDistances.value[currentRoundIndex.value] ?? 0)
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let raceIntervalId: any = null
 
   // Actions
-
   function startRacing() {
     generateSchedule()
     isPaused.value = false
-    roundStartTime = Date.now()
     startNextRound()
   }
 
@@ -51,23 +52,16 @@ export const useRaceStore = defineStore('race', () => {
       return
     }
 
-    roundStartTime = Date.now()
+    roundStartTimestamp = Date.now()
     setRacingHorseForRound()
+    roundStartTime = performance.now()
     race()
   }
 
   function race() {
-    animateRace()
-
     raceIntervalId = setInterval(() => {
       animateRace()
     }, 100)
-
-    // if (finishedHorsesCount.value === HORSES_COUNT_PER_ROUND) {
-    //   console.log(finishedHorsesCount.value)
-    //   // add a delay here
-    //   startNextRound()
-    // }
   }
 
   function animateRace() {
@@ -86,7 +80,7 @@ export const useRaceStore = defineStore('race', () => {
       }
 
       const condition = horses.value[horseId]!.condition
-      const randomFactor = 0.85 + Math.random() * 0.3
+      const randomFactor = 0.7 + Math.random() * 0.6
       const distanceFactor = 1 - (racingHorse.distance - 1200) / 10000
 
       const speed = (BASE_SPEED + condition / 100) * randomFactor * distanceFactor
@@ -94,7 +88,7 @@ export const useRaceStore = defineStore('race', () => {
       // update distance traveled
       roundProgress.value[horseId]!.distance += speed
 
-      if (roundProgress.value[horseId]!.distance >= 100) {
+      if (roundProgress.value[horseId]!.distance > 100) {
         updateHorseRanking(horseId)
         tickFinishedCount += 1
       }
@@ -103,17 +97,15 @@ export const useRaceStore = defineStore('race', () => {
     finishedHorsesCount.value += tickFinishedCount
 
     if (finishedHorsesCount.value === HORSES_COUNT_PER_ROUND) {
-      console.log(finishedHorsesCount.value)
-
-      clearInterval(raceIntervalId)
+      clearIntervalId()
       setRoundResult()
       startNextRound()
     }
   }
 
   function updateHorseRanking(horseId: number) {
-    const now = Date.now()
-    const finishTime = now - roundStartTime
+    const now = performance.now()
+    const finishTime = now - roundStartTime - pausedTime
     const position = finishedHorsesCount.value + 1
 
     roundProgress.value[horseId]!.finished = true
@@ -122,7 +114,7 @@ export const useRaceStore = defineStore('race', () => {
   }
 
   function endRace() {
-    clearInterval(raceIntervalId)
+    clearIntervalId()
     isPaused.value = true
   }
 
@@ -145,17 +137,24 @@ export const useRaceStore = defineStore('race', () => {
     raceResults.value.push({
       rankings,
       distance: currentRoundDistance.value,
-      timestamp: new Date(roundStartTime),
+      timestamp: new Date(roundStartTimestamp),
     })
   }
 
   function pauseRace() {
     isPaused.value = true
-    clearInterval(raceIntervalId)
+    pauseStartTime = performance.now()
+    clearIntervalId()
   }
 
   function resumeRace() {
     isPaused.value = false
+
+    if (pauseStartTime > 0) {
+      pausedTime += performance.now() - pauseStartTime
+      pauseStartTime = 0
+    }
+
     race()
   }
 
@@ -189,7 +188,9 @@ export const useRaceStore = defineStore('race', () => {
   function resetRoundState() {
     roundProgress.value = {}
     finishedHorsesCount.value = 0
-    clearInterval(raceIntervalId)
+    pausedTime = 0
+    pauseStartTime = 0
+    clearIntervalId()
   }
 
   function resetStoreState() {
@@ -197,6 +198,11 @@ export const useRaceStore = defineStore('race', () => {
     currentRoundIndex.value = INITIAL_ROUND_VALUE
     raceResults.value = []
     isPaused.value = true
+  }
+
+  function clearIntervalId() {
+    clearInterval(raceIntervalId)
+    raceIntervalId = null
   }
 
   return {
@@ -209,6 +215,7 @@ export const useRaceStore = defineStore('race', () => {
 
     // Computed
     racingHorseIds,
+    currentRoundDistance,
 
     // Actions
     startRacing,

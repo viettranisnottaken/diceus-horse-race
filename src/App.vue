@@ -1,84 +1,89 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import ControlPanel from './components/ControlPanel.vue'
+import HorseList from './components/HorseList.vue'
+import RaceTrack from './components/RaceTrack.vue'
+import RaceResults from './components/RaceResults.vue'
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+  <div class="app">
+    <div class="container">
+      <h1 class="title">Horse Race Simulator</h1>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <ControlPanel />
 
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+      <div class="main-content">
+        <HorseList />
+        <RaceTrack />
+        <RaceResults />
+      </div>
     </div>
-  </header>
-
-  <RouterView />
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+<style scoped lang="scss">
+@use '@/assets/breakpoints' as *;
+@use '@/assets/colors' as *;
+
+.app {
+  min-height: 100vh;
+  width: 100vw;
+  background-color: $color-background;
+  padding: 1.25rem;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
+.container {
   width: 100%;
-  font-size: 12px;
+  max-width: 100rem;
+  margin: 0 auto;
+}
+
+.title {
   text-align: center;
-  margin-top: 2rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: $color-text-primary;
+  margin-bottom: 1.875rem;
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: 1.25rem;
 }
 
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
+/* Large screens (desktop) - default layout above */
 
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+/* Medium screens (tablet) */
+@include tablet {
+  .app {
+    padding: 1rem;
   }
 
-  .logo {
-    margin: 0 2rem 0 0;
+  .title {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
   }
 
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
+  .main-content {
+    gap: 1rem;
+  }
+}
+
+/* Small screens (mobile) */
+@include mobile {
+  .app {
+    padding: 0.75rem;
   }
 
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
+  .title {
+    font-size: 1.75rem;
+    margin-bottom: 1.25rem;
+  }
 
-    padding: 1rem 0;
+  .main-content {
+    gap: 0.75rem;
     margin-top: 1rem;
   }
 }

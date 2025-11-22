@@ -79,12 +79,13 @@ export function generateDistances() {
   return [1200, 1400, 1600, 1800, 2000, 2200]
 }
 
-export function formatSecondsToMinutes(seconds: number): string {
-  const minutes = Math.floor(seconds / 60)
-  const remainingSeconds = seconds % 60
+export function formatSecondsToMinutes(milliseconds: number): string {
+  const totalSeconds = milliseconds / 1000
+  const minutes = Math.floor(totalSeconds / 60)
+  const remainingSeconds = totalSeconds % 60
 
   if (minutes > 0) {
-    return `${minutes}:${remainingSeconds.toFixed(2).padStart(5, '0')}`
+    return `${minutes}:${remainingSeconds.toFixed(3).padStart(6, '0')}`
   }
-  return `${remainingSeconds.toFixed(2)}s`
+  return `${remainingSeconds.toFixed(3)}s`
 }

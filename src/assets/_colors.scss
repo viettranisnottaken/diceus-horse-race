@@ -1,0 +1,115 @@
+// Color System - White
+$white-0: #ffffff;
+
+// Color System - Slate/Gray Scale
+$slate-50: #f8fafc;
+$slate-100: #f1f5f9;
+$slate-200: #e2e8f0;
+$slate-300: #cbd5e1;
+$slate-500: #64748b;
+$slate-600: #475569;
+$slate-800: #1e293b;
+
+// Color System - Blue
+$blue-50: #eff6ff;
+$blue-100: #dbeafe;
+$blue-200: #bfdbfe;
+$blue-500: #3b82f6;
+$blue-600: #2563eb;
+$blue-800: #1e40af;
+
+// Color System - Cyan
+$cyan-100: #cffafe;
+
+// Color System - Emerald
+$emerald-100: #d1fae5;
+$emerald-500: #10b981;
+$emerald-800: #065f46;
+
+// Color System - Amber/Orange
+$amber-100: #fef3c7;
+$amber-500: #f59e0b;
+$amber-600: #d97706;
+$amber-800: #92400e;
+
+// Color System - Red
+$red-100: #fee2e2;
+$red-500: #ef4444;
+$red-600: #dc2626;
+$red-800: #991b1b;
+
+// Color System - Indigo
+$indigo-100: #e0e7ff;
+
+// Semantic Color Variables
+$color-background: $slate-100;
+$color-background-soft: $slate-50;
+$color-background-mute: $slate-200;
+
+$color-text-primary: $slate-800;
+$color-text-secondary: $slate-500;
+
+$color-border: $slate-200;
+$color-border-hover: $slate-300;
+
+// Component Specific Colors
+$color-primary: $blue-500;
+$color-primary-hover: $blue-600;
+$color-primary-light: $blue-50;
+$color-primary-bg: $blue-100;
+
+$color-success: $emerald-500;
+$color-success-bg: $emerald-100;
+$color-success-text: $emerald-800;
+
+$color-warning: $amber-500;
+$color-warning-hover: $amber-600;
+$color-warning-bg: $amber-100;
+$color-warning-text: $amber-800;
+
+$color-danger: $red-500;
+$color-danger-hover: $red-600;
+$color-danger-bg: $red-100;
+$color-danger-text: $red-800;
+
+$color-secondary: $slate-500;
+$color-secondary-hover: $slate-600;
+
+// Status Colors
+$status-completed: $emerald-500;
+$status-racing: $blue-500;
+$status-paused: $amber-500;
+$status-not-started: $slate-500;
+
+// Race Position Colors
+$position-first-bg: $blue-100;
+$position-second-bg: $cyan-100;
+$position-third-bg: $indigo-100;
+
+// Card and Surface Colors
+$card-background: $white-0;
+$card-hover-bg: $slate-100;
+
+// Track and Progress Colors
+$track-background: $slate-200;
+$progress-fill: $blue-200;
+$finish-indicator: $slate-300;
+
+// Condition Status Colors
+$condition-excellent-bg: $emerald-100;
+$condition-excellent-text: $emerald-800;
+$condition-good-bg: $blue-100;
+$condition-good-text: $blue-800;
+$condition-fair-bg: $amber-100;
+$condition-fair-text: $amber-800;
+$condition-poor-bg: $red-100;
+$condition-poor-text: $red-800;
+
+// Box Shadow Variables
+$shadow-sm: 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.1);
+$shadow-md: 0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+$shadow-xl: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.15);
+$shadow-2xl: 0 0.625rem 1.5625rem rgba(0, 0, 0, 0.2);
+$shadow-button: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+$shadow-indicator: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.2);
