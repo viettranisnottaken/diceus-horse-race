@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref, computed, onScopeDispose } from 'vue'
 import { defineStore } from 'pinia'
 import type {
   THorseList,
@@ -59,6 +59,8 @@ export const useRaceStore = defineStore('race', () => {
   }
 
   function race() {
+    // Clear any existing interval before starting a new one
+    clearIntervalId()
     raceIntervalId = setInterval(() => {
       animateRace()
     }, 100)
@@ -204,6 +206,11 @@ export const useRaceStore = defineStore('race', () => {
     clearInterval(raceIntervalId)
     raceIntervalId = null
   }
+
+  // Cleanup interval when store is disposed (e.g., on unmount)
+  onScopeDispose(() => {
+    clearIntervalId()
+  })
 
   return {
     // State

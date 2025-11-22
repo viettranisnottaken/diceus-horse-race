@@ -1,6 +1,6 @@
 # diceus-horse-race
 
-This template should help get you started developing with Vue 3 in Vite.
+Refer to `requirement.pdf` for the requirements and `specs.md` for my breakdown of the test requirements
 
 ## Recommended IDE Setup
 
