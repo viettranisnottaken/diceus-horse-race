@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import ControlPanel from './components/ControlPanel.vue'
-import HorseList from './components/HorseList.vue'
-import RaceTrack from './components/RaceTrack.vue'
-import RaceResults from './components/RaceResults.vue'
+import ControlPanel from '@/components/ControlPanel.vue'
+import HorseList from '@/components/HorseList.vue'
+import RaceTrack from '@/components/RaceTrack.vue'
+import RaceResults from '@/components/RaceResults.vue'
 </script>
 
 <template>
